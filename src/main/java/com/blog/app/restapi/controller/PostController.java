@@ -1,5 +1,7 @@
 package com.blog.app.restapi.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +32,9 @@ public class PostController {
 		this.postService = postService;
 	}
 	
-	// create blog post method 
+	// create blog post method   // @Valid enable java bean validation on PostDto class
 	@PostMapping
-	public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto){
+	public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){    
 		return new ResponseEntity<PostDto>(postService.createPost(postDto),HttpStatus.CREATED);
 	}
 	
@@ -61,7 +63,7 @@ public class PostController {
 	
 	//update existing post by id in REST API 
 	@PutMapping("/{id}")
-	public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable (name="id") long id) {
+	public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable (name="id") long id) {
 		PostDto postResponse = postService.updatePost(postDto, id);
 		return new ResponseEntity<>(postResponse, HttpStatus.OK);
 	}
